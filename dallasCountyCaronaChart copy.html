@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="/js/d3.min.js" type="text/javascript"> </script> -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Dallas County Carona Virus Data</title>
+</head>
+<body>
+  <script src="/js/d3.v4.min.js"></script>
+
+<div class="head">
+  <h1>Covid Epidemiology Data Dallas County Trends</h1>
+</div>
+<main class="container">
+
+ 
+
+  <article>
+    <h1>New Cases</h1>
+    <section id="newCases">  </section>
+  </article>
+  
+  <article > 
+    <h1>Existing Total of Active Cases</h1>
+    <section id="totalCases"></section>
+  </article>
+  <article>
+    <h1>(Ro) or 'R naught' value</h1> 
+      <blockquote>
+        Basic replication rate (Ro) or 'R naught' expresses the overall virulence of an infectious agent in a specific location/population.  This number is comparatively calculated with the number of new cases versus the number of existing infections.  If the Ro is >1, an infectious agent is likely to cause significant outbreak or epidemic within a community or location.  If Ro is less &lt;1, significant outbreak is less likely.  World wide, SARS-COV-2 has an established Ro of 2-3, which can be mitigated by social distancing measures.
+      </blockquote>
+       <section  id="Ro"></section>  
+  </article>
+  
+  
+  <article> 
+      <h1>Rt value</h1>
+      <section  id="Rt">
+        
+      </section>
+  </article>
+  
+</main>
+
+  <script src="/js/drawCharts.js"></script>  
+
+</body>
+
+</html>

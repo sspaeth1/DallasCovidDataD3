@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/d3.min.js" type="text/javascript"> </script>
+    <title>Dallas County Carona Virus Data</title>
+</head>
+<body>
+
+    <svg width ="500" height ="500"></svg>
+
+<script>
+    async function getData(){
+        const response = await fetch('Dallas_County _Coronavirus.csv');
+        const data = await response.text();
+
+        // split row
+        const rows = data.split('\n')
+        //split colums 
+        const columns =  rows.forEach(row =>{
+           const rows = row.split(',')
+           console.log(rows);
+           })     
+    }
+    getData()
+     
+</script>
+
+
+
+
+<script>// data = Object.assign(d3.csvParse(await FileAttachment("aapl.csv").text(), d3.autoType).map(({date, close}) => ({date, value: close})), {y: "$ Close"})
+
+    let data =[
+//         {1:
+//             {
+//                 date: 2020-05-01,
+//                 value: 187
+//             }
+//         },
+//     { 2:
+//             {
+//             date: 2020-05-02,
+//             value: 181
+//         }
+//     },
+//     {3:
+//         {
+//         date: 2020-05-03,
+//         value: 234
+//         }
+//     },
+//     {4:
+//         {
+//         date: 2020-05-04,
+//         value: 237
+//         }
+//     },
+//     {5:
+//         {
+//         date: 2020-05-05,
+//         value: 253
+//          }
+//     }
+// ][
+  {
+    date: "1-May",
+    value: 187
+  },
+  {
+    date: "2-May",
+    value: 181
+  },
+  {
+    date: "3-May",
+    value: 234
+  },
+  {
+    date: "4-May",
+    value: 237
+  },
+  {
+    date: "5-May",
+    value: 253
+  },
+  {
+    date: "6-May",
+    value: 246
+  },
+  {
+    date: "7-May",
+    value: 251
+  },
+  {
+    date: "8-May",
+    value: 249
+  },
+  {
+    date: "9-May",
+    value: 250
+  },
+  {
+    date: "10-May",
+    value: 251
+  },
+  {
+    date: "11-May",
+    value: 253
+  },
+  {
+    date: "12-May",
+    value: 236
+  },
+  {
+    date: "13-May",
+    value: 243
+  },
+  {
+    date: "14-May",
+    value: 235
+  },
+  {
+    date: "15-May",
+    value: 199
+  },
+  {
+    date: "16-May",
+    value: 214
+  },
+  {
+    date: "17-May",
+    value: 205
+  },
+  {
+    date: "18-May",
+    value: 224
+  },
+  {
+    date: "19-May",
+    value: 225
+  },
+  {
+    date: "20-May",
+    value: 226
+  },
+  {
+    date: "21-May",
+    value: 183
+  },
+  {
+    date: "22-May",
+    value: 204
+  },
+  {
+    date: "23-May",
+    value: 171
+  },
+  {
+    date: "24-May",
+    value: 178
+  },
+  {
+    date: "25-May",
+    value: 206
+  },
+  {
+    date: "26-May",
+    value: 213
+  },
+  {
+    date: "27-May",
+    value: 207
+  },
+  {
+    date: "28-May",
+    value: 202
+  },
+  {
+    date: "29-May",
+    value: 200
+  },
+  {
+    date: "30-May",
+    value: 219
+  },
+  {
+    date: "31-May",
+    value: 228
+  }
+]
+
+const height = 500;
+const width = 500;
+const  line = d3.line()
+        .curve(d3.curveStep)
+        .defined(d => !isNaN(d.value))
+        .x(d => x(d.date))
+        .y(d => y(d.value))
+
+
+ const margin = ({top: 20, right: 30, bottom: 30, left: 40})
+
+ var x = d3.scaleUtc()
+    .domain(d3.extent(data, d => d.date))
+    .range([margin.left, width - margin.right])
+
+ var y = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.value)]).nice()
+    .range([height - margin.bottom, margin.top])
+
+ var xAxis = g => g
+    .attr("transform", `translate(0,${height - margin.bottom})`)
+    .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0))
+
+ var yAxis = g => g
+    .attr("transform", `translate(${margin.left},0)`)
+    .call(d3.axisLeft(y))
+    .call(g => g.select(".domain").remove())
+    .call(g => g.select(".tick:last-of-type text").clone()
+        .attr("x", 3)
+        .attr("text-anchor", "start")
+        .attr("font-weight", "bold")
+        .text(data.y))
+
+function formatValue(value) {
+  return value.toLocaleString("en", {
+    style: "currency",
+    currency: "USD"
+  });
+}
+
+function formatDate(date) {
+  return date.toLocaleString("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  });
+}
+
+
+  const svg = d3.select('svg')
+      .style("-webkit-tap-highlight-color", "transparent")
+      .style("overflow", "visible");
+
+  svg.append("g")
+      .call(xAxis);
+
+  svg.append("g")
+      .call(yAxis);
+  
+  svg.append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 1.5)
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("d", line);
+
+  const tooltip = svg.append("g");
+
+  svg.on("touchmove mousemove", function() {
+    const {date, value} = bisect(d3.mouse(this)[0]);
+
+
+
+    tooltip
+        .attr("transform", `translate(${x(date)},${y(value)})`)
+        .call(callout, `${formatValue(value)}
+${formatDate(date)}`);
+  });
+
+  svg.on("touchend mouseleave", () => tooltip.call(callout, null));
+
+ svg.node();
+
+
+
+        callout = (g, value) => {
+        if (!value) return g.style("display", "none");
+
+        g
+            .style("display", null)
+            .style("pointer-events", "none")
+            .style("font", "10px sans-serif");
+
+        const path = g.selectAll("path")
+            .data([null])
+            .join("path")
+            .attr("fill", "white")
+            .attr("stroke", "black");
+
+        const text = g.selectAll("text")
+            .data([null])
+            .join("text")
+            .call(text => text
+            .selectAll("tspan")
+            .data((value + "").split(/\n/))
+            .join("tspan")
+                .attr("x", 0)
+                .attr("y", (d, i) => `${i * 1.1}em`)
+                .style("font-weight", (_, i) => i ? null : "bold")
+                .text(d => d));
+
+        const {x, y, width: w, height: h} = text.node().getBBox();
+
+        text.attr("transform", `translate(${-w / 2},${15 - y})`);
+        path.attr("d", `M${-w / 2 - 10},5H-5l5,-5l5,5H${w / 2 + 10}v${h + 20}h-${w + 20}z`);
+        }
+
+
+    //  bisect = {
+        const bisect = d3.bisector(d => d.date).left;
+         mx => {
+            const date = x.invert(mx);
+            const index = bisect(data, date, 1);
+            const a = data[index - 1];
+            const b = data[index];
+            return date - a.date > b.date - date ? b : a;
+        };
+    //  }
+
+        
+
+
+
+// d3 = require("d3@5")
+
+
+</script>
+
+</body>
+</html>
+<!-- 
+[
+  {
+    "Date": "2020-05-01",
+    "New Case": 187
+  },
+  {
+    "Date": "2020-05-02",
+    "New Case": 181
+  },
+  {
+    "Date": "2020-05-03",
+    "New Case": 234
+  },
+  {
+    "Date": "2020-05-04",
+    "New Case": 237
+  },
+  {
+    "Date": "2020-05-05",
+    "New Case": 253
+  },
+  {
+    "Date": "2020-05-06",
+    "New Case": 246
+  },
+  {
+    "Date": "2020-05-07",
+    "New Case": 251
+  },
+  {
+    "Date": "2020-05-08",
+    "New Case": 249
+  },
+  {
+    "Date": "2020-05-09",
+    "New Case": 250
+  },
+  {
+    "Date": "2020-05-10",
+    "New Case": 251
+  },
+  {
+    "Date": "2020-05-11",
+    "New Case": 253
+  },
+  {
+    "Date": "2020-05-12",
+    "New Case": 236
+  },
+  {
+    "Date": "2020-05-13",
+    "New Case": 243
+  },
+  {
+    "Date": "2020-05-14",
+    "New Case": 235
+  },
+  {
+    "Date": "2020-05-15",
+    "New Case": 199
+  },
+  {
+    "Date": "2020-05-16",
+    "New Case": 214
+  },
+  {
+    "Date": "2020-05-17",
+    "New Case": 205
+  },
+  {
+    "Date": "2020-05-18",
+    "New Case": 224
+  },
+  {
+    "Date": "2020-05-19",
+    "New Case": 225
+  },
+  {
+    "Date": "2020-05-20",
+    "New Case": 226
+  },
+  {
+    "Date": "2020-05-21",
+    "New Case": 183
+  },
+  {
+    "Date": "2020-05-22",
+    "New Case": 204
+  },
+  {
+    "Date": "2020-05-23",
+    "New Case": 171
+  },
+  {
+    "Date": "2020-05-24",
+    "New Case": 178
+  },
+  {
+    "Date": "2020-05-25",
+    "New Case": 206
+  },
+  {
+    "Date": "2020-05-26",
+    "New Case": 213
+  },
+  {
+    "Date": "2020-05-27",
+    "New Case": 207
+  },
+  {
+    "Date": "2020-05-28",
+    "New Case": 202
+  },
+  {
+    "Date": "2020-05-29",
+    "New Case": 200
+  },
+  {
+    "Date": "2020-05-30",
+    "New Case": 219
+  },
+  {
+    "Date": "2020-05-31",
+    "New Case": 228
+  }
+] -->

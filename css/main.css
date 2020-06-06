@@ -1,0 +1,76 @@
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;;
+
+}
+
+.head{
+
+    color: #fff;
+    width: 100%;
+    background: url(/imgs/header.jpg) content-box   center center blue;
+    background-size: cover;
+    vertical-align: center;
+    margin:0;
+    padding:0;
+}
+
+ .head h1{
+    padding: 20px;
+    text-shadow: 2px 2px #111b3f;
+    color: #fff;
+}
+
+.axis {
+     font: 14px sans-serif; 
+}
+
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #555;
+    shape-rendering: crispEdges;
+    stroke-width: 1px;
+  }
+
+.line {
+fill: none;
+stroke: steelblue;
+stroke-width: 2px;
+}
+
+.container{
+    width:100vw;
+    display: inline-block;
+}
+
+article{
+    float:left;
+    max-width: 40%;
+    margin: 5%;
+}
+
+svg{
+    height:150%;
+}
+
+svg text{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    fill: rgb(78, 78, 78);
+
+}
+
+h1{
+    
+    margin: 5% 15% 5% 45%;
+    color: #111b3f;
+    font-weight: 900;
+}
+        
+   
